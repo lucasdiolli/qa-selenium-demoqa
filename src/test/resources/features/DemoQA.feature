@@ -21,3 +21,12 @@ Funcionalidade: Gerenciar registros na Web Tables do DemoQA
   Entao uma nova janela deve ser aberta com a mensagem "This is a sample page"
   E fecho a nova janela aberta
 
+  Cenário: Gerenciar múltiplos registros dinamicamente
+    Dado que acesso o site DemoQA
+    Quando escolho a opcao Elements na pagina inicial
+    E clico no submenu Web Tables
+    E crio 12 novos registros dinâmicos
+    E edito o último registro criado para o nome "Editado"
+    E deleto todos os registros criados
+    Então valido que a tabela está vazia ou sem os registros criados
+
