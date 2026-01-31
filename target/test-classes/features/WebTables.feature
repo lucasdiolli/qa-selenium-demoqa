@@ -4,7 +4,7 @@ Funcionalidade: Gerenciar registros na Web Tables do DemoQA
   Quero acessar a seção de Web Tables
   Para criar, editar e deletar registros
 
-  Cenário: Criar um registro
+  Cenário: Criar um registro no Practice Form
     Dado que acesso o site DemoQA
     Quando escolho a opcao Forms na pagina inicial
     E clico no submenu Practice Form

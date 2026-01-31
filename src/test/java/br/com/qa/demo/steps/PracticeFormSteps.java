@@ -8,6 +8,7 @@ import io.cucumber.java.pt.Quando;
 import io.cucumber.java.pt.E;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,59 +18,62 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PracticeFormSteps {
 
-    private PracticeFormPage practiceFormPage;
+    WebDriver driver = Hooks.driver;
+    PracticeFormPage page = new PracticeFormPage(driver);
 
     @AfterStep
     public void delay() throws InterruptedException {
         Thread.sleep(Config.STEP_DELAY);
     }
+
+
     @Quando("escolho a opcao Forms na pagina inicial")
     public void escolho_a_opcao_forms_na_pagina_inicial() {
-        // Remove todos os iframes de anúncios que atrapalham o clique
-        ((JavascriptExecutor) Hooks.driver).executeScript(
-                "document.querySelectorAll('iframe').forEach(el => el.remove());"
-        );
+        // Limpa o lixo visual
+      //  ((JavascriptExecutor) driver).executeScript(
+        //        "var ad = document.getElementById('fixedban'); if(ad) ad.remove();" +
+         //               "var footer = document.querySelector('footer'); if(footer) footer.remove();" +
+         //               "var ads = document.querySelectorAll('iframe'); ads.forEach(el => el.remove());"
+       // );
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        WebElement formsCard = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//h5[text()='Forms']")));
 
-        // Localiza o card Forms
-        WebElement formsCard = Hooks.driver.findElement(By.xpath("//h5[text()='Forms']"));
-
-        // Rola até o elemento
-        ((JavascriptExecutor) Hooks.driver).executeScript("arguments[0].scrollIntoView(true);", formsCard);
-
-        // Força o clique via JavaScript
-        ((JavascriptExecutor) Hooks.driver).executeScript("arguments[0].click();", formsCard);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", formsCard);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", formsCard);
     }
 
     @Quando("clico no submenu Practice Form")
     public void clico_no_submenu_practice_form() {
-        // Primeiro entra no card Forms
-        WebElement formsCard = Hooks.driver.findElement(By.xpath("//h5[text()='Forms']"));
-        ((JavascriptExecutor) Hooks.driver).executeScript("arguments[0].scrollIntoView(true);", formsCard);
-        ((JavascriptExecutor) Hooks.driver).executeScript("arguments[0].click();", formsCard);
+        // 1. Limpeza segura de anúncios
+    //    ((JavascriptExecutor) driver).executeScript(
+      //          "var ad = document.getElementById('fixedban'); if(ad) ad.remove();" +
+      //                  "var footer = document.querySelector('footer'); if(footer) footer.remove();"
+      //  );
 
-        // Espera o submenu aparecer
-        WebDriverWait wait = new WebDriverWait(Hooks.driver, Duration.ofSeconds(10));
+        // 2. Espera o submenu lateral ficar visível
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         WebElement practiceFormMenu = wait.until(
                 ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Practice Form']"))
         );
-        practiceFormMenu.click();
 
-        practiceFormPage = new PracticeFormPage(Hooks.driver);
+        // 3. Scroll e Clique
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", practiceFormMenu);
+        practiceFormMenu.click();
     }
 
 
     @Quando("crio um novo registro")
     public void criarNovoRegistro() {
-        practiceFormPage.criarRegistro("Lucas", "Oliveira", "lucas@teste.com", "1234567890", "Paulista Av");
+        page.criarRegistro("Lucas", "Oliveira", "lucas@teste.com", "1234567890", "Paulista Av");
     }
 
     @Entao("valido que foi exbido popup com dados do registro")
     public void valido_que_foi_exibido_popup_com_dados_do_registro() {
-        assertTrue(practiceFormPage.validarPopupExibido());
+        assertTrue(page.validarPopupExibido());
     }
 
     @E("fecho o popup")
     public void fechoOPopup() {
-        practiceFormPage.fecharPopup();
+        page.fecharPopup();
     }
 }
