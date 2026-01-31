@@ -1,5 +1,5 @@
 # language: pt
-Funcionalidade: Gerenciar registrosdo DemoQA
+Funcionalidade: Realizar testes no DemoQA
   Como usuário do DemoQA
   Quero acessar funcionalidades
   Para criar, editar e deletar registros

@@ -2,8 +2,6 @@ package br.com.qa.demo.pages;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
 import java.util.List;
 
 public class SortablePage {
@@ -16,18 +14,18 @@ public class SortablePage {
     }
 
     public void ordenarListaCrescente() {
-        // Nomes dos itens na ordem que queremos: One, Two, Three, Four, Five, Six
+
         String[] ordemCorreta = {"One", "Two", "Three", "Four", "Five", "Six"};
 
         for (int i = 0; i < ordemCorreta.length; i++) {
             // Localiza o item que deveria estar na posição 'i'
             WebElement itemParaMover = driver.findElement(By.xpath("//div[@id='demo-tabpane-list']//div[text()='" + ordemCorreta[i] + "']"));
 
-            // Localiza o item que está atualmente na posição 'i' para servir de alvo
+            // Localiza o item que está atualmente na posição 'i'
             List<WebElement> itensAtuais = driver.findElements(By.xpath("//div[@id='demo-tabpane-list']//div[contains(@class, 'list-group-item')]"));
             WebElement alvo = itensAtuais.get(i);
 
-            // Se o item já não estiver na posição correta, movemos
+            // Se o item já não estiver na posição correta, mover
             if (!itemParaMover.equals(alvo)) {
                 actions.dragAndDrop(itemParaMover, alvo).perform();
             }
@@ -35,11 +33,21 @@ public class SortablePage {
     }
 
     public void ordenarListaDecrescente() {
-        // Ordem desejada: Six, Five, Four, Three, Two, One
         String[] ordemDecrescente = {"Six", "Five", "Four", "Three", "Two", "One"};
 
+        // Localiza a lista inteira ou o primeiro item para dar o foco
+        WebElement lista = driver.findElement(By.id("demo-tabpane-list"));
+
+        // Centraliza a lista na tela
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", lista);
+
+        // pausa para garantir que o scroll terminou e a tela estabilizou
+        try { Thread.sleep(500); } catch (InterruptedException e) {}
+
+        String[] ordem = {"One", "Two", "Three", "Four", "Five", "Six"};
+
         for (int i = 0; i < ordemDecrescente.length; i++) {
-            // Localiza o item que queremos colocar na posição atual 'i'
+            // Localiza o item que devo colocar na posição atual 'i'
             WebElement itemParaMover = driver.findElement(
                     By.xpath("//div[@id='demo-tabpane-list']//div[text()='" + ordemDecrescente[i] + "']")
             );
@@ -50,10 +58,9 @@ public class SortablePage {
             );
             WebElement alvo = itensAtuais.get(i);
 
-            // Executa o arrastar e soltar se já não estiver no lugar
+            // Executa o dragAndDrop se já não estiver no lugar
             if (!itemParaMover.getText().equals(alvo.getText())) {
                 actions.dragAndDrop(itemParaMover, alvo).perform();
-                // Pequena pausa para o DOM processar a troca de lugar (opcional, mas evita erros no Mac)
                 try { Thread.sleep(200); } catch (InterruptedException e) {}
             }
         }

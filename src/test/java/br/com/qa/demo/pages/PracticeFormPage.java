@@ -4,6 +4,7 @@ import org.openqa.selenium.*;
 
 public class PracticeFormPage {
     private WebDriver driver;
+    String path = System.getProperty("user.dir") + "/src/test/resources/qa_test.txt";
 
     public PracticeFormPage(WebDriver driver) {
         this.driver = driver;
@@ -21,8 +22,7 @@ public class PracticeFormPage {
         WebElement hobbiesCheckbox = driver.findElement(By.xpath("//label[@for='hobbies-checkbox-1']"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", hobbiesCheckbox);
         hobbiesCheckbox.click();
-       // driver.findElement(By.xpath("//label[@for='hobbies-checkbox-1']")).click();
-        driver.findElement(By.id("uploadPicture")).sendKeys("/Users/lucasdiolli/Documents/Qaprojects/qa-selenium-demoqa/src/test/resources/qa_test.txt");
+        driver.findElement(By.id("uploadPicture")).sendKeys(path);
         driver.findElement(By.id("currentAddress")).sendKeys(endereco);
         driver.findElement(By.id("react-select-3-input")).sendKeys("NCR");
         driver.findElement(By.id("react-select-3-input")).sendKeys(Keys.ENTER);
