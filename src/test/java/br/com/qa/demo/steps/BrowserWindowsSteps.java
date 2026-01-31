@@ -26,21 +26,19 @@ public class BrowserWindowsSteps {
 
     @E("clico no submenu Browser Windows")
     public void clicoNoSubmenuBrowserWindows() {
-        // Primeiro entra no card Alerts, Frame & Windows
         WebElement card = Hooks.driver.findElement(By.xpath("//h5[text()='Alerts, Frame & Windows']"));
         ((JavascriptExecutor) Hooks.driver).executeScript("arguments[0].scrollIntoView(true);", card);
         ((JavascriptExecutor) Hooks.driver).executeScript("arguments[0].click();", card);
 
-        // Espera o submenu aparecer
         WebDriverWait wait = new WebDriverWait(Hooks.driver, Duration.ofSeconds(10));
         WebElement browserWindowsMenu = wait.until(
                 ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Browser Windows']"))
         );
         browserWindowsMenu.click();
 
-        // Inicializa a Page Object
         browserWindowsPage = new BrowserWindowsPage(Hooks.driver);
     }
+
 
     @E("clico no botão New Window")
     public void clicoNoBotaoNewWindow() {

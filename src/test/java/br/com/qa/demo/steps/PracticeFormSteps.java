@@ -54,9 +54,9 @@ public class PracticeFormSteps {
         );
         practiceFormMenu.click();
 
-        // Inicializa a Page Object
         practiceFormPage = new PracticeFormPage(Hooks.driver);
     }
+
 
     @Quando("crio um novo registro")
     public void criarNovoRegistro() {
