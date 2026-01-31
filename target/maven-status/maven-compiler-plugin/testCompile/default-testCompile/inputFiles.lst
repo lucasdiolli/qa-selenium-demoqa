@@ -1,8 +1,15 @@
 /Users/lucasdiolli/Documents/Qaprojects/qa-selenium-demoqa/src/test/java/br/com/qa/demo/context/ScenarioContext.java
 /Users/lucasdiolli/Documents/Qaprojects/qa-selenium-demoqa/src/test/java/br/com/qa/demo/pages/BrowserWindowsPage.java
 /Users/lucasdiolli/Documents/Qaprojects/qa-selenium-demoqa/src/test/java/br/com/qa/demo/pages/PracticeFormPage.java
+/Users/lucasdiolli/Documents/Qaprojects/qa-selenium-demoqa/src/test/java/br/com/qa/demo/pages/ProgressBarPage.java
+/Users/lucasdiolli/Documents/Qaprojects/qa-selenium-demoqa/src/test/java/br/com/qa/demo/pages/SortablePage.java
+/Users/lucasdiolli/Documents/Qaprojects/qa-selenium-demoqa/src/test/java/br/com/qa/demo/pages/WebTablesPage.java
 /Users/lucasdiolli/Documents/Qaprojects/qa-selenium-demoqa/src/test/java/br/com/qa/demo/runners/TestRunner.java
 /Users/lucasdiolli/Documents/Qaprojects/qa-selenium-demoqa/src/test/java/br/com/qa/demo/steps/BrowserWindowsSteps.java
+/Users/lucasdiolli/Documents/Qaprojects/qa-selenium-demoqa/src/test/java/br/com/qa/demo/steps/CommonSteps.java
 /Users/lucasdiolli/Documents/Qaprojects/qa-selenium-demoqa/src/test/java/br/com/qa/demo/steps/Hooks.java
 /Users/lucasdiolli/Documents/Qaprojects/qa-selenium-demoqa/src/test/java/br/com/qa/demo/steps/PracticeFormSteps.java
+/Users/lucasdiolli/Documents/Qaprojects/qa-selenium-demoqa/src/test/java/br/com/qa/demo/steps/ProgressBarSteps.java
+/Users/lucasdiolli/Documents/Qaprojects/qa-selenium-demoqa/src/test/java/br/com/qa/demo/steps/SortableSteps.java
+/Users/lucasdiolli/Documents/Qaprojects/qa-selenium-demoqa/src/test/java/br/com/qa/demo/steps/WebTablesSteps.java
 /Users/lucasdiolli/Documents/Qaprojects/qa-selenium-demoqa/src/test/java/br/com/qa/demo/utils/Config.java
