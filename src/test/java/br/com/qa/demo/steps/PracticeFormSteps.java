@@ -11,6 +11,10 @@ import io.cucumber.java.pt.Quando;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -21,7 +25,7 @@ public class PracticeFormSteps {
 
     public PracticeFormSteps(ScenarioContext context) {
         this.context = context;
-       // this.practiceFormPage = new PracticeFormPage(context.getDriver());
+        this.practiceFormPage = new PracticeFormPage(context.getDriver());
     }
 
     @AfterStep
@@ -29,9 +33,23 @@ public class PracticeFormSteps {
         Thread.sleep(Config.STEP_DELAY);
     }
 
-    @Quando("clico no submenu Practice Form") public void clico_no_submenu_practice_form() {
-        context.getDriver().findElement(By.xpath("//span[text()='Practice Form']")).click();
-         practiceFormPage = new PracticeFormPage(context.getDriver()); }
+
+    @Quando("escolho a opcao Forms na pagina inicial")
+    public void escolho_a_opcao_forms_na_pagina_inicial() {
+        WebElement formsCard = context.getDriver().findElement(By.xpath("//h5[text()='Forms']"));
+        ((JavascriptExecutor) context.getDriver()).executeScript("arguments[0].scrollIntoView(true);", formsCard);
+        ((JavascriptExecutor) context.getDriver()).executeScript("arguments[0].click();", formsCard);
+    }
+
+    @Quando("clico no submenu Practice Form")
+    public void clico_no_submenu_practice_form() {
+        WebDriverWait wait = new WebDriverWait(context.getDriver(), Duration.ofSeconds(10));
+        WebElement practiceFormMenu = wait.until(
+                ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Practice Form']"))
+        );
+        practiceFormMenu.click();
+        practiceFormPage = new PracticeFormPage(context.getDriver());
+    }
 
     @Quando("crio um novo registro")
     public void criarNovoRegistro() {

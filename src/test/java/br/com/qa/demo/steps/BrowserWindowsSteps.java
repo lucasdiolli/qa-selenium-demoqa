@@ -1,71 +1,86 @@
 package br.com.qa.demo.steps;
 
-import br.com.qa.demo.context.ScenarioContext;
 import br.com.qa.demo.pages.BrowserWindowsPage;
 import br.com.qa.demo.utils.Config;
 import io.cucumber.java.AfterStep;
-import io.cucumber.java.pt.E;
-import io.cucumber.java.pt.Entao;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import io.cucumber.java.pt.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.time.Duration;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BrowserWindowsSteps {
 
-    private ScenarioContext context;
+    private WebDriver driver;
     private BrowserWindowsPage browserWindowsPage;
-
-    public BrowserWindowsSteps(ScenarioContext context) {
-        this.context = context;
-    }
+    private String originalWindow;
 
     @AfterStep
     public void delay() throws InterruptedException {
         Thread.sleep(Config.STEP_DELAY);
     }
 
-    @E("clico no submenu Browser Windows")
-    public void clicoNoSubmenuBrowserWindows() {
-        ((JavascriptExecutor) context.getDriver()).executeScript(
+    @Dado("que acesso o site DemoQA")
+    public void acessarSiteDemoQA() {
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://demoqa.com/");
+        //originalWindow = driver.getWindowHandle();
+    }
+
+    @Quando("escolho a opcao Forms na pagina inicial")
+    public void escolho_a_opcao_forms_na_pagina_inicial() {
+        // Remove todos os iframes de anúncios que atrapalham o clique
+        ((JavascriptExecutor) driver).executeScript(
                 "document.querySelectorAll('iframe').forEach(el => el.remove());"
         );
 
-        // garante que o card foi clicado
-        WebDriverWait wait = new WebDriverWait(context.getDriver(), Duration.ofSeconds(10));
-        WebElement card = context.getDriver().findElement(By.xpath("//h5[text()='Alerts, Frame & Windows']"));
-        ((JavascriptExecutor) context.getDriver()).executeScript("arguments[0].scrollIntoView(true);", card);
-        ((JavascriptExecutor) context.getDriver()).executeScript("arguments[0].click();", card);
+        // Localiza o card Forms
+        WebElement formsCard = driver.findElement(By.xpath("//h5[text()='Forms']"));
 
-        // espera o submenu aparecer
+        // Rola até o elemento
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", formsCard);
 
-        WebElement browserWindowsMenu = wait.until(
-                ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Browser Windows']"))
-        );
-        browserWindowsMenu.click();
-
-        browserWindowsPage = new BrowserWindowsPage(context.getDriver());
+        // Força o clique via JavaScript
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", formsCard);
     }
 
+    @Quando("escolho a opcao Alerts, Frame & Windows na pagina inicial")
+    public void escolhoAlertsFrameWindows() {
+        WebElement card = driver.findElement(By.xpath("//h5[text()='Alerts, Frame & Windows']"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", card);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", card);
+    }
 
+    @Quando("clico no submenu Browser Windows")
+    public void clicoNoSubmenuBrowserWindows() {
+        driver.findElement(By.xpath("//span[text()='Browser Windows']")).click();
+        browserWindowsPage = new BrowserWindowsPage(driver);
+    }
 
-    @E("clico no botão New Window")
+    @Quando("clico no botão New Window")
     public void clicoNoBotaoNewWindow() {
         browserWindowsPage.clickNewWindowButton();
     }
 
-    @Entao("uma nova janela deve ser aberta com a mensagem {string}")
-    public void umaNovaJanelaDeveSerAbertaComAMensagem(String message) {
-        assertTrue(browserWindowsPage.isNewWindowOpenedWithMessage(message));
+    @Então("uma nova janela deve ser aberta com a mensagem {string}")
+    public void validarMensagemNovaJanela(String mensagemEsperada) {
+        // troca para a nova janela
+        for (String windowHandle : driver.getWindowHandles()) {
+            if (!windowHandle.equals(originalWindow)) {
+                driver.switchTo().window(windowHandle);
+                break;
+            }
+        }
+
+        String textoPagina = driver.findElement(By.id("sampleHeading")).getText();
+        assertEquals(mensagemEsperada, textoPagina);
     }
 
     @E("fecho a nova janela aberta")
-    public void fechoANovaJanelaAberta() {
-        browserWindowsPage.closeNewWindow();
+    public void fecharNovaJanela() {
+        driver.close(); // fecha a nova janela
+        driver.switchTo().window(originalWindow); // volta para a janela original
+        driver.quit();
     }
 }
