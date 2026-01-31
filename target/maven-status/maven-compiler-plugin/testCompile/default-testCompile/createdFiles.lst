@@ -9,5 +9,7 @@ br/com/qa/demo/pages/PracticeFormPage.class
 br/com/qa/demo/context/ScenarioContext.class
 br/com/qa/demo/steps/CommonSteps.class
 br/com/qa/demo/steps/BrowserWindowsSteps.class
+br/com/qa/demo/steps/SortableSteps.class
 br/com/qa/demo/pages/ProgressBarPage.class
 br/com/qa/demo/steps/PracticeFormSteps.class
+br/com/qa/demo/pages/SortablePage.class

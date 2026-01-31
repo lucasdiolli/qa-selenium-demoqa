@@ -38,3 +38,16 @@ Funcionalidade: Gerenciar registrosdo DemoQA
     Então valido que o valor da barra é menor ou igual a 25%
     E inicio a barra novamente e reseto ao chegar em 100%
 
+  Cenário: Ordenar lista de forma crescente
+    Dado que acesso o site DemoQA
+    Quando escolho a opcao Interactions na pagina inicial
+    E clico no submenu Sortable
+    E ordeno os elementos da lista na ordem crescente
+    Então valido que os elementos estão na ordem correta
+
+  Cenário: Ordenar lista de forma decrescente
+    Dado que acesso o site DemoQA
+    Quando escolho a opcao Interactions na pagina inicial
+    E clico no submenu Sortable
+    E ordeno os elementos da lista na ordem decrescente
+    Então valido que os elementos estão na ordem "Six" para "One"
