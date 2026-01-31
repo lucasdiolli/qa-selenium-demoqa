@@ -29,12 +29,7 @@ public class PracticeFormSteps {
 
     @Quando("escolho a opcao Forms na pagina inicial")
     public void escolho_a_opcao_forms_na_pagina_inicial() {
-        // Limpa o lixo visual
-      //  ((JavascriptExecutor) driver).executeScript(
-        //        "var ad = document.getElementById('fixedban'); if(ad) ad.remove();" +
-         //               "var footer = document.querySelector('footer'); if(footer) footer.remove();" +
-         //               "var ads = document.querySelectorAll('iframe'); ads.forEach(el => el.remove());"
-       // );
+
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         WebElement formsCard = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//h5[text()='Forms']")));
 
@@ -44,19 +39,12 @@ public class PracticeFormSteps {
 
     @Quando("clico no submenu Practice Form")
     public void clico_no_submenu_practice_form() {
-        // 1. Limpeza segura de anúncios
-    //    ((JavascriptExecutor) driver).executeScript(
-      //          "var ad = document.getElementById('fixedban'); if(ad) ad.remove();" +
-      //                  "var footer = document.querySelector('footer'); if(footer) footer.remove();"
-      //  );
 
-        // 2. Espera o submenu lateral ficar visível
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         WebElement practiceFormMenu = wait.until(
                 ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Practice Form']"))
         );
 
-        // 3. Scroll e Clique
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", practiceFormMenu);
         practiceFormMenu.click();
     }

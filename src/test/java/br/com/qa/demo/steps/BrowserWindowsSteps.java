@@ -1,6 +1,8 @@
 package br.com.qa.demo.steps;
 
 import br.com.qa.demo.pages.BrowserWindowsPage;
+import br.com.qa.demo.utils.Config;
+import io.cucumber.java.AfterStep;
 import io.cucumber.java.pt.E;
 import io.cucumber.java.pt.Entao;
 import io.cucumber.java.pt.Quando;
@@ -18,37 +20,28 @@ public class BrowserWindowsSteps {
 
 
     WebDriver driver = Hooks.driver;
+    BrowserWindowsPage browserWindowsPage = new BrowserWindowsPage(driver);
 
-
-     BrowserWindowsPage browserWindowsPage = new BrowserWindowsPage(driver);
+    @AfterStep
+    public void delay() throws InterruptedException {
+        Thread.sleep(Config.STEP_DELAY);
+    }
 
     @Quando("escolho a opcao Alerts, Frame & Windows na pagina inicial")
     public void escolho_a_opcao_alerts_frame_windows_na_pagina_inicial() {
-        // Remove anúncios/iframes que atrapalham
-        ((JavascriptExecutor) Hooks.driver).executeScript(
-                "document.querySelectorAll('iframe').forEach(el => el.remove());"
-        );
 
-        // Espera o card aparecer
-        WebDriverWait wait = new WebDriverWait(Hooks.driver, Duration.ofSeconds(10));
-        WebElement alertsCard = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(By.xpath("//h5[text()='Alerts, Frame & Windows']"))
-        );
+        WebDriverWait wait = new WebDriverWait(Hooks.driver, Duration.ofSeconds(3));
+        WebElement formsCard = Hooks.driver.findElement(By.xpath("//h5[text()='Alerts, Frame & Windows']"));
 
         // Rola e clica via JS
-        ((JavascriptExecutor) Hooks.driver).executeScript("arguments[0].scrollIntoView(true);", alertsCard);
-        ((JavascriptExecutor) Hooks.driver).executeScript("arguments[0].click();", alertsCard);
+        ((JavascriptExecutor) Hooks.driver).executeScript("arguments[0].scrollIntoView(true);", formsCard);
+        ((JavascriptExecutor) Hooks.driver).executeScript("arguments[0].click();", formsCard);
     }
 
     @E("clico no submenu Browser Windows")
     public void clicoNoSubmenuBrowserWindows() {
-        // Primeiro entra no card Alerts, Frame & Windows
-        WebElement card = Hooks.driver.findElement(By.xpath("//h5[text()='Alerts, Frame & Windows']"));
-        ((JavascriptExecutor) Hooks.driver).executeScript("arguments[0].scrollIntoView(true);", card);
-        ((JavascriptExecutor) Hooks.driver).executeScript("arguments[0].click();", card);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
 
-        // Espera o submenu aparecer
-        WebDriverWait wait = new WebDriverWait(Hooks.driver, Duration.ofSeconds(10));
         WebElement browserWindowsMenu = wait.until(
                 ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Browser Windows']"))
         );
