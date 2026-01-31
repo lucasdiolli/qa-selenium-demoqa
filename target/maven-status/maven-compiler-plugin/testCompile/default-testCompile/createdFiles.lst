@@ -1,5 +1,6 @@
 br/com/qa/demo/pages/WebTablesPage.class
 br/com/qa/demo/runners/TestRunner.class
+br/com/qa/demo/steps/ProgressBarSteps.class
 br/com/qa/demo/pages/BrowserWindowsPage.class
 br/com/qa/demo/utils/Config.class
 br/com/qa/demo/steps/Hooks.class
@@ -8,4 +9,5 @@ br/com/qa/demo/pages/PracticeFormPage.class
 br/com/qa/demo/context/ScenarioContext.class
 br/com/qa/demo/steps/CommonSteps.class
 br/com/qa/demo/steps/BrowserWindowsSteps.class
+br/com/qa/demo/pages/ProgressBarPage.class
 br/com/qa/demo/steps/PracticeFormSteps.class

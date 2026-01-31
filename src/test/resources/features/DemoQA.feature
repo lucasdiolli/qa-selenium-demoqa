@@ -1,7 +1,7 @@
 # language: pt
-Funcionalidade: Gerenciar registros na Web Tables do DemoQA
+Funcionalidade: Gerenciar registrosdo DemoQA
   Como usuário do DemoQA
-  Quero acessar a seção de Web Tables
+  Quero acessar funcionalidades
   Para criar, editar e deletar registros
 
   Cenário: Criar um registro no Practice Form
@@ -29,4 +29,12 @@ Funcionalidade: Gerenciar registros na Web Tables do DemoQA
     E edito o último registro criado para o nome "Editado"
     E deleto todos os registros criados
     Então valido que a tabela está vazia ou sem os registros criados
+
+  Cenário: Interagir com a Progress Bar
+    Dado que acesso o site DemoQA
+    Quando escolho a opcao Widgets na pagina inicial
+    E clico no submenu Progress Bar
+    E inicio a barra e paro antes dos 25%
+    Então valido que o valor da barra é menor ou igual a 25%
+    E inicio a barra novamente e reseto ao chegar em 100%
 
